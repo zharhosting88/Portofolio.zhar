@@ -1,0 +1,1008 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b18">
+<meta name="description" content="Portfolio resmi Muhammad Idzhar Al-Asyari, Web Developer dan Content Creator dari ZharWeb.">
+<meta name="keywords" content="Muhammad Idzhar Al-Asyari, ZharWeb, Web Developer, HTML, CSS, JavaScript, Portfolio">
+<meta name="author" content="Muhammad Idzhar Al-Asyari">
+<meta property="og:title" content="Muhammad Idzhar Al-Asyari | ZharWeb">
+<meta property="og:description" content="Portfolio pribadi dan perjalanan saya di dunia web development.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070b18'/%3E%3Ctext x='50' y='70' font-size='65' font-weight='bold' text-anchor='middle' fill='%237c5cff'%3EZ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<title>Muhammad Idzhar Al-Asyari | ZharWeb</title>
+
+<style>
+:root {
+  --bg: #070b18;
+  --panel: #0c1328;
+  --panel2: #101a35;
+  --text: #f4f6ff;
+  --muted: #9ba9c8;
+  --purple: #8055ff;
+  --blue: #19baff;
+  --border: rgba(120,145,255,.18);
+  --gradient: linear-gradient(110deg,#8645ff,#16c7ff);
+  --shadow: 0 20px 70px rgba(0,0,0,.25);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  font-family: Inter, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 15%,rgba(92,44,255,.13),transparent 38%),
+    radial-gradient(ellipse at 85% 45%,rgba(0,157,255,.10),transparent 35%);
+}
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+img { max-width: 100%; }
+.container { width: min(1120px,90%); margin: auto; }
+.gradient-text {
+  background: var(--gradient);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.section { padding: 100px 0; }
+.section-heading { margin-bottom: 42px; }
+.eyebrow {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  color: #83a9ff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.section-heading h2 {
+  font-size: clamp(29px,4vw,42px);
+  line-height: 1.2;
+  margin: 12px 0;
+  letter-spacing: -1.5px;
+}
+.section-heading p { color: var(--muted); max-width: 560px; }
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 21px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  transition: .3s;
+}
+.btn-primary { background: var(--gradient); border: none; }
+.btn-outline { background: rgba(255,255,255,.025); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px #5b45ff30; }
+header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  background: rgba(7,11,24,.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.navbar {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+.logo {
+  font-family: Orbitron,sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.logo span { color: var(--blue); }
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a {
+  font-size: 12px;
+  color: #b7c3df;
+  padding: 10px 12px;
+  border-radius: 9px;
+  transition: .3s;
+}
+.nav-links a:hover,.nav-links a.active {
+  color: white;
+  background: #18213b;
+}
+.nav-links a.active { box-shadow: inset 0 -2px var(--blue); }
+.menu-toggle {
+  display: none;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+.hero { padding: 145px 0 85px; min-height: 680px; display: flex; align-items: center; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  gap: 60px;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #141d38;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 7px 13px;
+  font-size: 12px;
+  color: #c9d4f1;
+  margin-bottom: 23px;
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #27e7b2;
+  box-shadow: 0 0 12px #27e7b2;
+}
+.hero h1 {
+  font-size: clamp(36px,5vw,60px);
+  line-height: 1.13;
+  letter-spacing: -2.5px;
+  margin-bottom: 16px;
+}
+.hero h3 { color: #bdc9e8; font-size: 17px; font-weight: 500; margin-bottom: 16px; }
+.hero-description { color: var(--muted); max-width: 550px; font-size: 14px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0; }
+.quick-info { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
+.quick-item { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.quick-item i { color: var(--blue); font-size: 19px; }
+.quick-item small { display: block; color: var(--muted); font-size: 11px; }
+.hero-visual { display: flex; justify-content: center; position: relative; }
+.profile-orbit {
+  width: min(340px,75vw);
+  aspect-ratio: 1;
+  padding: 9px;
+  border-radius: 50%;
+  background: conic-gradient(from 30deg,#16c7ff,#6e45ff,#111b42,#16c7ff);
+  box-shadow: 0 0 45px #5647ff30,0 0 100px #147bff12;
+  animation: float 5s ease-in-out infinite;
+  position: relative;
+}
+.profile-orbit::before {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border: 1px dashed #4c6dff70;
+  border-radius: 50%;
+  animation: spin 25s linear infinite;
+}
+.profile-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(145deg,#17254b,#080d1c);
+  border: 5px solid var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-inner img { width: 100%; height: 100%; object-fit: cover; }
+.profile-placeholder { text-align: center; color: #90a8ff; }
+.profile-placeholder i { font-size: 82px; display: block; margin-bottom: 10px; }
+.profile-placeholder span { font-size: 12px; }
+.floating-card {
+  position: absolute;
+  padding: 13px 16px;
+  border: 1px solid #465b9c65;
+  background: rgba(12,19,40,.92);
+  border-radius: 13px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+  animation: float 4s ease-in-out infinite;
+}
+.floating-card i { color: var(--blue); margin-right: 8px; }
+.card-one { top: 12%; right: -4%; }
+.card-two { bottom: 12%; left: -5%; animation-delay: 1s; }
+.social-row { display: flex; gap: 10px; margin-top: 12px; }
+.social-row a {
+  width: 34px; height: 34px; border: 1px solid var(--border);
+  display: grid; place-items: center; border-radius: 9px;
+  color: #b8c8f0; transition: .3s;
+}
+.social-row a:hover { color: var(--blue); transform: translateY(-3px); border-color: var(--blue); }
+.stats { border-block: 1px solid var(--border); background: #0b1020a6; }
+.stats-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+.stat { padding: 27px 15px; text-align: center; border-right: 1px solid var(--border); }
+.stat:last-child { border: 0; }
+.stat h3 { font-size: 27px; }
+.stat p { color: var(--muted); font-size: 12px; }
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.skill-card,.project-card,.service-card,.about-card,.contact-card {
+  background: linear-gradient(145deg,#101a35b8,#0b1123);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  transition: .35s;
+}
+.skill-card { padding: 25px; }
+.skill-card:hover,.project-card:hover,.service-card:hover {
+  transform: translateY(-6px);
+  border-color: #7662ff80;
+  box-shadow: 0 18px 45px #0003;
+}
+.skill-top { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
+.skill-icon {
+  width: 50px; height: 50px; border-radius: 13px;
+  display: grid; place-items: center; font-size: 24px;
+  background: #7755ff19; color: #9b88ff;
+}
+.skill-card:nth-child(2) .skill-icon { color: #20baff; background: #20baff18; }
+.skill-card:nth-child(3) .skill-icon { color: #ffcc57; background: #ffcc5718; }
+.skill-card h3 { font-size: 17px; }
+.skill-card p { color: var(--muted); font-size: 12px; min-height: 43px; }
+.skill-progress-info { display: flex; justify-content: space-between; font-size: 11px; margin-top: 22px; }
+.progress { height: 7px; background: #1b2748; border-radius: 20px; margin-top: 9px; overflow: hidden; }
+.progress span {
+  display: block; width: 0; height: 100%;
+  border-radius: inherit; background: var(--gradient);
+  transition: width 1.5s ease;
+}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+.about-card { padding: 30px; }
+.about-card h3 { font-size: 21px; margin-bottom: 14px; }
+.about-card p { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+.about-list { display: grid; gap: 13px; }
+.about-list div { display: flex; gap: 12px; font-size: 13px; color: #c9d4ed; }
+.about-list i { width: 18px; color: var(--blue); margin-top: 5px; }
+.timeline-item { border-left: 2px solid #4d67ff; padding: 0 0 22px 20px; position: relative; }
+.timeline-item::before {
+  content: ""; position: absolute; width: 9px; height: 9px;
+  border-radius: 50%; background: var(--blue); left: -5.5px; top: 7px;
+}
+.timeline-item h4 { font-size: 14px; }
+.timeline-item small { color: #8d9cbe; }
+.timeline-item p { margin-top: 5px; font-size: 12px; }
+.projects-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.project-card { overflow: hidden; }
+
+.project-cover {
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #3a3a9a, #111d3d 65%, #101527);
+}
+
+.project-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .5s ease;
+}
+
+.project-card:hover .project-cover img {
+  transform: scale(1.05);
+}
+
+.project-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent, #16c7ff14);
+}
+
+.project-content { padding: 22px; }
+.project-content h3 { font-size: 16px; margin-bottom: 9px; }
+.project-content p { color: var(--muted); font-size: 12px; min-height: 60px; }
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 15px 0; }
+.tags span { background: #1b2443; color: #b9c9f2; border-radius: 6px; padding: 4px 8px; font-size: 10px; }
+.project-link { font-size: 12px; color: #67caff; }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.service-card { padding: 26px; }
+.service-card > i { font-size: 26px; color: #8b78ff; margin-bottom: 20px; }
+.service-card h3 { font-size: 16px; margin-bottom: 10px; }
+.service-card p { font-size: 12px; color: var(--muted); }
+.contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 25px; }
+.contact-card { padding: 28px; }
+.contact-method { display: flex; align-items: center; gap: 14px; margin: 20px 0; }
+.contact-method > i {
+  width: 43px; height: 43px; display: grid; place-items: center;
+  border-radius: 12px; color: var(--blue); background: #1d3a5b60;
+}
+.contact-method small { display: block; color: var(--muted); font-size: 11px; }
+.contact-method strong { font-size: 12px; overflow-wrap: anywhere; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-size: 12px; margin-bottom: 7px; color: #c8d3ec; }
+.form-group input,.form-group textarea {
+  width: 100%; border: 1px solid var(--border); outline: none;
+  color: white; background: #080e20; border-radius: 10px; padding: 13px;
+  transition: .3s;
+}
+.form-group input:focus,.form-group textarea:focus { border-color: var(--blue); }
+.form-group textarea { resize: vertical; min-height: 115px; }
+footer { border-top: 1px solid var(--border); padding: 25px 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+footer p { color: var(--muted); font-size: 11px; }
+.back-top {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  width: 45px; height: 45px; border: 1px solid var(--border);
+  border-radius: 13px; background: #121d39; color: white;
+  opacity: 0; pointer-events: none; transform: translateY(10px); transition: .3s;
+}
+.back-top.show { opacity: 1; pointer-events: auto; transform: none; }
+.toast {
+  position: fixed; right: 20px; top: 90px; z-index: 300;
+  max-width: calc(100% - 40px);
+  background: #111e37; border: 1px solid #36b8ff70;
+  border-radius: 12px; padding: 14px 18px;
+  display: flex; gap: 12px; align-items: center;
+  box-shadow: var(--shadow); font-size: 13px;
+  opacity: 0; pointer-events: none; transform: translateY(-10px);
+  transition: .3s;
+}
+.toast.show { opacity: 1; transform: none; }
+.toast i { color: #38e6b5; }
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(1,4,14,.8); backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; visibility: hidden; transition: .3s;
+}
+.modal-overlay.show { opacity: 1; visibility: visible; }
+.modal {
+  width: min(420px,100%); text-align: center; padding: 34px 27px;
+  border: 1px solid #5867ff70; border-radius: 22px;
+  background: linear-gradient(145deg,#141e3d,#080e20);
+  box-shadow: 0 20px 100px #0008;
+  transform: scale(.92) translateY(15px); transition: .3s;
+  position: relative;
+}
+.modal-overlay.show .modal { transform: none; }
+.modal-icon {
+  width: 66px; height: 66px; display: grid; place-items: center;
+  margin: 0 auto 18px; border-radius: 20px;
+  background: var(--gradient); font-size: 25px;
+}
+.modal h3 { font-size: 23px; margin-bottom: 10px; }
+.modal p { color: var(--muted); font-size: 13px; margin-bottom: 23px; }
+.modal-close {
+  position: absolute; top: 13px; right: 15px;
+  background: none; border: none; color: #9aa9cc; font-size: 21px;
+}
+.reveal { opacity: 0; transform: translateY(25px); transition: .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media(max-width:850px) {
+  .nav-links {
+    display: none; position: absolute; top: 74px; left: 5%; right: 5%;
+    padding: 14px; background: #0c1328; border: 1px solid var(--border);
+    border-radius: 14px; flex-direction: column; align-items: stretch;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px; }
+  .menu-toggle { display: block; }
+  .navbar > .btn { display: none; }
+  .hero { padding-top: 125px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+  .hero-visual { grid-row: 1; }
+  .hero-copy { text-align: center; }
+  .hero-description { margin: auto; }
+  .hero-actions,.quick-info { justify-content: center; }
+  .card-one { right: 3%; }
+  .card-two { left: 3%; }
+  .skills-grid,.projects-grid,.services-grid { grid-template-columns: repeat(2,1fr); }
+  .about-grid,.contact-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:540px) {
+  .section { padding: 72px 0; }
+  .hero { padding-bottom: 65px; }
+  .hero h1 { letter-spacing: -1.5px; }
+  .profile-orbit { width: min(270px,70vw); }
+  .floating-card { font-size: 10px; padding: 10px; }
+  .card-one { right: -1%; }
+  .card-two { left: -1%; }
+  .skills-grid,.projects-grid,.services-grid { grid-template-columns: 1fr; }
+  .stat h3 { font-size: 23px; }
+  .stat p { font-size: 10px; }
+  .quick-info { gap: 16px; }
+  .quick-item { text-align: left; }
+  .about-card,.contact-card { padding: 22px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+.btn-ai {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, #082d7d, #2f0578);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: .3s ease;
+}
+
+.btn-ai:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, .35);
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container navbar">
+    <a class="logo" href="#beranda">Z<span>harWeb</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#beranda" class="active"><i class="fa-solid fa-house"></i> Beranda</a>
+      <a href="#tentang"><i class="fa-solid fa-user"></i> Tentang</a>
+      <a href="#skill"><i class="fa-solid fa-code"></i> Skill</a>
+      <a href="#portofolio"><i class="fa-solid fa-briefcase"></i> Portofolio</a>
+      <a href="#kontak"><i class="fa-solid fa-envelope"></i> Kontak</a>
+      <a href="zhar.Ai.html" class="btn-ai">
+        Ai Agent <i class="fa-solid fa-circle-check"></i>
+      </a>
+    </nav>
+    <a class="btn btn-outline" href="#kontak"><i class="fa-solid fa-paper-plane"></i> Hubungi Saya</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="beranda">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <div class="status"><span class="status-dot"></span> Halo, selamat datang di profil saya</div>
+      <h1>Muhammad Idzhar<br><span class="gradient-text">Al-Asyari.</span></h1>
+      <h3><span id="typing"></span><span class="gradient-text">|</span></h3>
+      <p class="hero-description">
+        Saya tertarik dengan dunia teknologi, khususnya pengembangan website
+        menggunakan HTML, CSS, dan JavaScript. Saya terus belajar, bereksperimen,
+        dan mengembangkan kemampuan untuk menciptakan website yang modern,
+        responsif, dan interaktif.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#kontak"><i class="fa-brands fa-whatsapp"></i> Hubungi Saya</a>
+        <a class="btn btn-outline" href="#portofolio"><i class="fa-solid fa-code"></i> Lihat Portofolio</a>
+      </div>
+      <div class="quick-info">
+        <div class="quick-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>Jakarta Barat<small>Indonesia</small></div>
+        </div>
+        <div class="quick-item">
+          <i class="fa-solid fa-phone"></i>
+          <div>085811570814<small>Telepon / WhatsApp</small></div>
+        </div>
+        <div class="quick-item">
+          <i class="fa-solid fa-laptop-code"></i>
+          <div>Web Development<small>HTML, CSS, JavaScript</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="profile-orbit">
+        <div class="profile-inner">
+          <div class="profile-placeholder" id="profilePlaceholder">
+            <i class="fa-solid fa-user-astronaut"></i>
+            <span>muhammad idzhar / zharweb</span>
+          </div>
+          <img id="profileImage" src="https://i.imgur.com/03Go8Lx.jpeg" alt="Foto profil Muhammad Idzhar Al-Asyari" hidden>
+        </div>
+      </div>
+      <div class="floating-card card-one"><i class="fa-solid fa-circle-check"></i> Always Learning</div>
+      <div class="floating-card card-two">
+        <i class="fa-solid fa-rocket"></i> Keep Coding, Keep Growing
+        <div class="social-row">
+          <a href="https://github.com/zharhosting88" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://wa.me/6285811570814" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/zhar_web?obrf=a240Mmo1YmFkMDJz" data-toast="Tambahkan tautan media sosial lu" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><h3 class="gradient-text">03</h3><p>Teknologi Utama</p></div>
+    <div class="stat"><h3 class="gradient-text">100%</h3><p>Semangat Belajar</p></div>
+    <div class="stat"><h3 class="gradient-text">∞</h3><p>Ide untuk Berkembang</p></div>
+  </div>
+</div>
+
+<section class="section" id="skill">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow"><i class="fa-solid fa-code"></i> Kemampuan Saya</span>
+      <h2>Skill & <span class="gradient-text">Teknologi</span></h2>
+      <p>Teknologi yang saya pelajari untuk membangun pengalaman website yang menarik dan nyaman digunakan.</p>
+    </div>
+    <div class="skills-grid">
+      <article class="skill-card reveal">
+        <div class="skill-top"><div class="skill-icon"><i class="fa-brands fa-html5"></i></div><h3>HTML</h3></div>
+        <p>Menyusun struktur halaman website yang rapi, semantik, dan mudah dikembangkan.</p>
+        <div class="skill-progress-info"><span>HTML</span><span>85%</span></div>
+        <div class="progress"><span data-width="85%"></span></div>
+      </article>
+      <article class="skill-card reveal">
+        <div class="skill-top"><div class="skill-icon"><i class="fa-brands fa-css3-alt"></i></div><h3>CSS</h3></div>
+        <p>Membuat tampilan modern, responsif, animatif, dan nyaman di berbagai ukuran layar.</p>
+        <div class="skill-progress-info"><span>CSS</span><span>75%</span></div>
+        <div class="progress"><span data-width="75%"></span></div>
+      </article>
+      <article class="skill-card reveal">
+        <div class="skill-top"><div class="skill-icon"><i class="fa-brands fa-js"></i></div><h3>JavaScript</h3></div>
+        <p>Menambahkan interaksi, validasi form, animasi, dan fitur dinamis pada website.</p>
+        <div class="skill-progress-info"><span>JavaScript</span><span>65%</span></div>
+        <div class="progress"><span data-width="65%"></span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tentang">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow"><i class="fa-solid fa-user"></i> Kenali Saya</span>
+      <h2>Tentang <span class="gradient-text">Saya</span></h2>
+      <p>Sedikit cerita tentang diri saya, minat, dan perjalanan belajar di dunia teknologi.</p>
+    </div>
+    <div class="about-grid">
+      <article class="about-card reveal">
+        <h3><i class="fa-solid fa-fingerprint gradient-text"></i> Siapa Saya?</h3>
+        <p>
+          Halo! Saya Muhammad Idzhar Al-Asyari, kreator di balik ZharWeb.
+          Saya memiliki minat dalam web development dan senang mengeksplorasi
+          ide-ide baru melalui kode. Bagi saya, setiap proyek adalah kesempatan
+          untuk belajar, memperbaiki kemampuan, dan menghasilkan karya yang lebih baik.
+        </p>
+        <p>
+          Saya percaya bahwa konsistensi, kejujuran, dan kemauan belajar merupakan
+          bagian penting dalam proses berkembang di bidang teknologi.
+        </p>
+        <button class="btn btn-outline" id="detailButton"><i class="fa-solid fa-circle-info"></i> Lihat Detail Profil</button>
+      </article>
+      <article class="about-card reveal">
+        <h3><i class="fa-solid fa-compass gradient-text"></i> Fokus Saya</h3>
+        <div class="timeline-item">
+          <h4>Web Development</h4>
+          <small>HTML, CSS & JavaScript</small>
+          <p>Membangun website responsif dengan struktur yang baik dan interaksi yang bermanfaat.</p>
+        </div>
+        <div class="timeline-item">
+          <h4>UI & Pengalaman Pengguna</h4>
+          <small>Desain dan interaksi</small>
+          <p>Mempelajari tata letak, warna, animasi, dan kemudahan penggunaan website.</p>
+        </div>
+        <div class="timeline-item">
+          <h4>Belajar dan Berkembang</h4>
+          <small>Proses berkelanjutan</small>
+          <p>Mencoba hal baru dan memperbaiki proyek berdasarkan pengalaman.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="portofolio">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Karya Saya</span>
+      <h2>Proyek <span class="gradient-text">Pilihan</span></h2>
+      <p>Berikut karya web zhar</p>
+    </div>
+    <div class="projects-grid">
+      <article class="project-card reveal">
+        <div class="project-cover"><img src="https://i.imgur.com/nqPJ7UB.jpeg" alt="ss web" /></div>
+        <div class="project-content">
+          <h3>Website Profil</h3>
+          <p>Website personal untuk memperkenalkan identitas, kemampuan, dan informasi kontak.</p>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+          <a class="project-link" href="https://zharhosting88.github.io/zharWebV2/zharWebV2" target="_blank" rel="noopener noreferrer">Lihat Proyek <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </article>
+      <article class="project-card reveal">
+        <div class="project-cover"><img src="https://i.imgur.com/vErbzic.jpeg" alt=" "></div>
+        <div class="project-content">
+          <h3>Absensi QR</h3>
+          <p>Konsep aplikasi absensi dengan pemindaian QR dan pencatatan data pengguna.</p>
+          <div class="tags"><span>JavaScript</span><span>email js</span><span>QR Code</span><span>Web App</span></div>
+          <a class="project-link" href="#" data-toast="Web sedang down">Detail Proyek <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+      <article class="project-card reveal">
+        <div class="project-cover"><img src="https://i.imgur.com/O8W5XXy.jpeg" alt="ss" /></div>
+        <div class="project-content">
+          <h3>Website Toko Online</h3>
+          <p>Konsep katalog produk dengan tampilan menarik dan pengalaman belanja sederhana.</p>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>UI Design</span></div>
+          <a class="project-link" href="#kontak" data-toast="Web sedang down">Detail Proyek <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="layanan">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> Yang Bisa Saya Kerjakan</span>
+      <h2>Layanan <span class="gradient-text">Saya</span></h2>
+      <p>layanan kami</p>
+    </div>
+    <div class="services-grid">
+      <article class="service-card reveal">
+        <i class="fa-solid fa-laptop-code"></i>
+        <h3>Pembuatan Website</h3>
+        <p>Website profil, landing page, dan halaman promosi dengan desain responsif.</p>
+      </article>
+      <article class="service-card reveal">
+        <i class="fa-solid fa-palette"></i>
+        <h3>Desain Antarmuka</h3>
+        <p>Pengaturan tata letak, warna, tipografi, dan elemen visual agar tampilan lebih konsisten.</p>
+      </article>
+      <article class="service-card reveal">
+        <i class="fa-solid fa-gears"></i>
+        <h3>Interaksi Website</h3>
+        <p>Penambahan fitur JavaScript, animasi, popup, dan komponen interaktif sesuai kebutuhan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="kontak">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow"><i class="fa-solid fa-paper-plane"></i> Mari Terhubung</span>
+      <h2>Hubungi <span class="gradient-text">Saya</span></h2>
+      <p>Punya ide website atau ingin berdiskusi? Kirim pesan melalui formulir berikut.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <h3>Informasi Kontak</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">Silakan hubungi saya melalui salah satu kontak di bawah ini.</p>
+        <div class="contact-method">
+          <i class="fa-brands fa-whatsapp"></i>
+          <div><small>WhatsApp</small><strong>085811570814</strong></div>
+        </div>
+        <div class="contact-method">
+          <i class="fa-solid fa-location-dot"></i>
+          <div><small>Lokasi</small><strong>Jakarta Barat, Indonesia</strong></div>
+        </div>
+        <div class="contact-method">
+          <i class="fa-brands fa-github"></i>
+          <div><small>GitHub</small><strong>zharhosting88</strong></div>
+        </div>
+        <div class="social-row">
+          <a href="https://github.com/zharhosting88" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://wa.me/6285811570814" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/zhar_web?obrf=a240Mmo1YmFkMDJz" data-toast="Ganti dengan tautan Instagram lu" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://tiktok.com/@pemula_coding" data-toast="Ganti dengan tautan TikTok lu" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <form class="contact-card reveal" id="contactForm">
+        <h3>Kirim Pesan</h3>
+        <p style="font-size:12px;color:var(--muted);margin:8px 0 22px">Formulir ini akan membuka WhatsApp dengan pesan yang sudah disiapkan.</p>
+        <div class="form-group">
+          <label for="senderName">Nama Kamu</label>
+          <input id="senderName" name="name" placeholder="Masukkan nama" required maxlength="80">
+        </div>
+        <div class="form-group">
+          <label for="senderEmail">Email (opsional)</label>
+          <input id="senderEmail" name="email" type="email" placeholder="masukan email lu gunakan @" maxlength="120">
+        </div>
+        <div class="form-group">
+          <label for="senderMessage">Pesan</label>
+          <textarea id="senderMessage" name="message" placeholder="Ceritakan kebutuhan kamu..." required maxlength="1500"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%"><i class="fa-brands fa-whatsapp"></i> Kirim via WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a class="logo" href="#beranda">Z<span>harWeb</span></a>
+    <p>© <span id="year"></span> Muhammad Idzhar Al-Asyari. Dibuat dengan semangat belajar.</p>
+    <p><i class="fa-solid fa-code gradient-text"></i> Keep Coding, Keep Growing.</p>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i><span id="toastMessage"></span>
+</div>
+
+<!-- Popup sambutan tidak menghalangi halaman; tutup kapan saja -->
+<div class="modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Tutup popup"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-icon"><i class="fa-solid fa-rocket"></i></div>
+    <h3 id="modalTitle">Selamat Datang!</h3>
+    <p>Terima kasih sudah mengunjungi website profil saya. Kenali karya, kemampuan, dan perjalanan saya bersama ZharWeb.</p>
+    <button class="btn btn-primary" id="modalOkay"><i class="fa-solid fa-check"></i> Jelajahi Website</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+  <div class="modal">
+    <button class="modal-close" data-close-detail aria-label="Tutup detail"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-icon"><i class="fa-solid fa-id-card"></i></div>
+    <h3 id="detailTitle">Informasi Profil</h3>
+    <div class="about-list" style="text-align:left;margin:20px 0">
+      <div><i class="fa-solid fa-user"></i><span><b>Nama:</b> Muhammad Idzhar Al-Asyari</span></div>
+      <div><i class="fa-solid fa-code"></i><span><b>Skill:</b> HTML, CSS, JavaScript</span></div>
+      <div><i class="fa-solid fa-location-dot"></i><span><b>Lokasi:</b> Jakarta Barat, Indonesia</span></div>
+      <div><i class="fa-brands fa-whatsapp"></i><span><b>WhatsApp:</b> 085811570814</span></div>
+      <div><i class="fa-solid fa-laptop"></i><span><b>Brand:</b> ZharWeb</span></div>
+    </div>
+    <button class="btn btn-primary" data-close-detail>Tutup Detail</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
+const menuToggle = $("#menuToggle");
+const navLinks = $("#navLinks");
+const backTop = $("#backTop");
+const toast = $("#toast");
+const toastMessage = $("#toastMessage");
+
+let toastTimer;
+let welcomeTimer;
+
+// Tahun footer
+$("#year").textContent = new Date().getFullYear();
+
+// Foto profil: jika file foto-profil.jpg belum tersedia,
+// tampilkan ikon pengganti tanpa merusak halaman.
+const profileImage = $("#profileImage");
+const profilePlaceholder = $("#profilePlaceholder");
+
+profileImage.addEventListener("load", () => {
+  profileImage.hidden = false;
+  profilePlaceholder.hidden = true;
+});
+
+profileImage.addEventListener("error", () => {
+  profileImage.hidden = true;
+  profilePlaceholder.hidden = false;
+});
+
+// Menu navigasi HP
+menuToggle.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.innerHTML = isOpen
+    ? '<i class="fa-solid fa-xmark"></i>'
+    : '<i class="fa-solid fa-bars"></i>';
+});
+
+$$(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  });
+});
+
+// Efek mengetik
+const roles = ["Web Developer", "Pelajar Teknologi", "Content Creator"];
+let roleIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeEffect() {
+  const current = roles[roleIndex];
+  $("#typing").textContent = current.slice(0, charIndex);
+
+  if (!deleting) {
+    charIndex++;
+    if (charIndex > current.length) {
+      deleting = true;
+      setTimeout(typeEffect, 1300);
+      return;
+    }
+  } else {
+    charIndex--;
+    if (charIndex < 0) {
+      charIndex = 0;
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+    }
+  }
+
+  setTimeout(typeEffect, deleting ? 45 : 95);
+}
+typeEffect();
+
+// Animasi saat elemen masuk ke layar
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    entry.target.classList.add("visible");
+
+    entry.target.querySelectorAll(".progress span").forEach(bar => {
+      bar.style.width = bar.dataset.width || "0%";
+    });
+
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.12 });
+
+$$(".reveal").forEach(el => revealObserver.observe(el));
+
+// Jika progress bar berada dalam card yang bukan reveal langsung
+const skillObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const bar = entry.target.querySelector(".progress span");
+    if (bar) bar.style.width = bar.dataset.width || "0%";
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.25 });
+
+$$(".skill-card").forEach(el => skillObserver.observe(el));
+
+// Toast notifikasi
+function showToast(message) {
+  toastMessage.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+$$("[data-toast]").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    showToast(link.dataset.toast);
+  });
+});
+
+// Popup sambutan
+const welcomeModal = $("#welcomeModal");
+const detailModal = $("#detailModal");
+
+function openModal(modal) {
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(modal) {
+  modal.classList.remove("show");
+  if (!$(".modal-overlay.show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+function closeAllModals() {
+  $$(".modal-overlay").forEach(modal => modal.classList.remove("show"));
+  document.body.style.overflow = "";
+}
+
+$("#modalClose").addEventListener("click", () => closeModal(welcomeModal));
+$("#modalOkay").addEventListener("click", () => closeModal(welcomeModal));
+
+$("#detailButton").addEventListener("click", () => openModal(detailModal));
+
+$$("[data-close-detail]").forEach(button => {
+  button.addEventListener("click", () => closeModal(detailModal));
+});
+
+$$(".modal-overlay").forEach(overlay => {
+  overlay.addEventListener("click", event => {
+    if (event.target === overlay) closeModal(overlay);
+  });
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeAllModals();
+});
+
+// Popup muncul setelah halaman siap, bukan langsung menutupi layar.
+window.addEventListener("load", () => {
+  welcomeTimer = setTimeout(() => openModal(welcomeModal), 1100);
+});
+
+// Navigasi aktif dan tombol kembali ke atas
+const sections = $$("main section[id]");
+const navItems = $$(".nav-links a");
+
+window.addEventListener("scroll", () => {
+  backTop.classList.toggle("show", window.scrollY > 400);
+
+  let current = "beranda";
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 150) {
+      current = section.id;
+    }
+  });
+
+  navItems.forEach(link => {
+    link.classList.toggle(
+      "active",
+      link.getAttribute("href") === "#" + current
+    );
+  });
+}, { passive: true });
+
+backTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Form kontak membuka WhatsApp dengan pesan otomatis.
+// Tidak membutuhkan backend atau database.
+$("#contactForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = $("#senderName").value.trim();
+  const email = $("#senderEmail").value.trim();
+  const message = $("#senderMessage").value.trim();
+
+  if (!name || !message) {
+    showToast("Nama dan pesan wajib diisi.");
+    return;
+  }
+
+  const text =
+    "Halo Muhammad Idzhar Al-Asyari, saya " + name + ".\n\n" +
+    (email ? "Email: " + email + "\n\n" : "") +
+    "Pesan:\n" + message;
+
+  const url = "https://wa.me/6285811570814?text=" + encodeURIComponent(text);
+  const newWindow = window.open(url, "_blank");
+
+  if (newWindow) {
+    newWindow.opener = null;
+  } else {
+    window.location.href = url;
+  }
+});
+</script>
+</body>
+</html>

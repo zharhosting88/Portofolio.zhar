@@ -1,0 +1,1488 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="ZharAi - Asisten AI sederhana dari ZharWeb.">
+<meta property="og:title" content="ZharAi — ZharWeb">
+<meta property="og:description" content="Asisten digital sederhana dari ZharWeb.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='25' fill='%23080b14'/%3E%3Ctext x='50' y='67' font-size='52' text-anchor='middle' fill='%2360a5fa'%3EZ%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>ZharAi — ZharWeb</title>
+
+<style>
+:root {
+  --bg: #080b14;
+  --panel: #101522;
+  --panel2: #171e2d;
+  --border: #252e40;
+  --text: #edf2ff;
+  --muted: #929db2;
+  --blue: #638cff;
+  --purple: #9b7bff;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  height: 100dvh;
+  overflow: hidden;
+}
+button, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.app {
+  width: 100%;
+  max-width: 1000px;
+  height: 100dvh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+header {
+  min-height: 66px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(8,11,20,.94);
+  border-bottom: 1px solid var(--border);
+  z-index: 2;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.logo {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255,255,255,.08);
+  color: white;
+  font-size: 19px;
+}
+.brand h1 { font-size: 18px; letter-spacing: -.5px; }
+.brand p { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.header-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+}
+.icon-btn:active { transform: scale(.95); }
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 17px;
+  scroll-behavior: smooth;
+}
+.welcome {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px 0;
+}
+.welcome-icon {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 25px;
+  background: linear-gradient(135deg,#17274b,#292044);
+  border: 1px solid #36436b;
+  color: #8db3ff;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+.welcome h2 { font-size: clamp(25px,6vw,35px); letter-spacing: -1px; }
+.welcome h2 span {
+  background: linear-gradient(90deg,#7aa8ff,#bd9bff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.welcome > p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 12px;
+  max-width: 350px;
+}
+.suggestions {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  margin-top: 28px;
+}
+.suggestion {
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  color: var(--text);
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  transition: .2s;
+}
+.suggestion:hover { border-color: var(--blue); }
+.suggestion i { color: #8baaff; display: block; margin-bottom: 10px; font-size: 17px; }
+.suggestion b { display: block; font-size: 13px; margin-bottom: 3px; }
+#chat { display: flex; flex-direction: column; gap: 24px; }
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: appear .25s ease;
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.avatar {
+  flex: 0 0 33px;
+  height: 33px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: #1c2943;
+  color: #8db3ff;
+  font-size: 13px;
+}
+.message.user { flex-direction: row-reverse; }
+.message.user .avatar { background: #293052; color: #c3b2ff; }
+.content { min-width: 0; max-width: 85%; }
+.name { font-size: 11px; color: var(--muted); margin: 3px 0 8px; }
+.bubble {
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.user .bubble {
+  background: #19243a;
+  border: 1px solid #293958;
+  padding: 10px 14px;
+  border-radius: 16px 5px 16px 16px;
+}
+.typing { color: var(--muted); font-size: 13px; }
+footer {
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: linear-gradient(transparent,var(--bg) 15%);
+}
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #303b51;
+  border-radius: 19px;
+  background: var(--panel);
+  box-shadow: 0 8px 35px #0003;
+}
+#prompt {
+  flex: 1;
+  min-width: 0;
+  max-height: 140px;
+  resize: none;
+  outline: none;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 10px 5px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+#prompt::placeholder { color: #79859b; }
+#send {
+  flex: 0 0 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 13px;
+  background: rgba(255,255,255,.04);
+  color: white;
+}
+#send:disabled { opacity: .45; }
+.disclaimer {
+  color: #778198;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 10px;
+}
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #202b40;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 12px;
+  z-index: 100;
+  display: none;
+  max-width: calc(100vw - 30px);
+  text-align: center;
+}
+
+/* Tambahan halaman histori */
+#historyView[hidden] { display: none !important; }
+#historyView {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+.history-header {
+  min-height: 66px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: #0b101b;
+}
+.history-heading { flex: 1; min-width: 0; }
+.history-heading h2 { font-size: 17px; }
+.history-heading p { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.history-body {
+  overflow-y: auto;
+  padding: 20px;
+  flex: 1;
+}
+.history-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.action-btn {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 11px;
+  padding: 11px 13px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.action-btn:hover { border-color: var(--blue); }
+.action-btn.primary {
+  background: linear-gradient(135deg,var(--blue),var(--purple));
+  border-color: transparent;
+}
+.action-btn.danger { color: #ff8d9e; }
+.history-list { display: grid; gap: 12px; }
+.history-card {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.history-icon {
+  flex: 0 0 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #1b2540;
+  color: #9ab4ff;
+  border-radius: 13px;
+}
+.history-info { flex: 1; min-width: 0; }
+.history-info h3 {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  margin-bottom: 6px;
+}
+.history-info p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.history-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.history-actions .action-btn { padding: 9px 10px; }
+.empty-history {
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  text-align: center;
+  color: var(--muted);
+  padding: 45px 15px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.empty-history i { font-size: 30px; margin-bottom: 13px; color: #8098ff; }
+
+/* Tambahan pop-up Tentang */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #03050bd9;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.modal-backdrop.show { display: flex; }
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border: 1px solid #303b51;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 20px 70px #0008;
+  animation: modalIn .2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(9px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.modal-head h2 { font-size: 18px; }
+.modal-close {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel2);
+  color: white;
+}
+.modal-logo {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 19px;
+  background: linear-gradient(135deg,#17274b,#292044);
+  border: 1px solid #36436b;
+  color: #8db3ff;
+  font-size: 23px;
+  margin-bottom: 15px;
+}
+.modal-content h3 { font-size: 20px; margin-bottom: 10px; }
+.modal-content p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.modal-content strong { color: var(--text); }
+.modal-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  margin-top: 15px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.confirm-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+@media(min-width:700px) {
+  main { padding: 28px 36px; }
+  footer { padding-left: 36px; padding-right: 36px; }
+  .history-body { padding: 25px 36px; }
+}
+@media(max-width:520px) {
+  .history-header { padding: 10px 12px; }
+  .history-body { padding: 15px 12px; }
+  .history-card { flex-wrap: wrap; }
+  .history-info { min-width: calc(100% - 60px); }
+  .history-actions { width: 100%; padding-left: 54px; }
+  .history-tools .action-btn { flex: 1; }
+}
+@media(max-width:380px) {
+  header { padding: 10px 12px; }
+  main { padding: 18px 12px; }
+  .suggestion { padding: 11px; }
+  .content { max-width: 90%; }
+  .header-actions { gap: 5px; }
+  .icon-btn { width: 35px; height: 35px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="brand">
+      <div class="logo"><i class="fa-solid fa-bolt"></i></div>
+      <div>
+        <h1>ZharAi</h1>
+        <p>Asisten dari ZharWeb</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="backProfile"
+  aria-label="Kembali ke halaman profil"
+  title="Kembali ke profil">
+  <i class="fa-solid fa-house"></i>
+      </button>
+      <button class="icon-btn" id="openHistory" aria-label="Histori obrolan" title="Histori obrolan">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </button>
+      <button class="icon-btn" id="aboutBtn" aria-label="Tentang ZharAi" title="Tentang ZharAi">
+        <i class="fa-solid fa-circle-info"></i>
+      </button>
+      <button class="icon-btn" id="newChat" aria-label="Chat baru" title="Chat baru">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <button class="icon-btn" id="clearChat" aria-label="Hapus percakapan" title="Hapus percakapan">
+        <i class="fa-regular fa-trash-can"></i>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="welcome" id="welcome">
+      <div class="welcome-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+      <h2>Halo, <span>ada yang bisa dibantu?</span></h2>
+      <p>Tanyakan tentang Muhammad Idzhar Al-Asyari, skill, proyek, layanan, dan ZharWeb.</p>
+
+      <div class="suggestions">
+        <button class="suggestion" data-prompt="Siapa Muhammad Idzhar Al-Asyari?">
+  <i class="fa-solid fa-user"></i>
+  <b>Tentang Idzhar</b>
+  Kenali pemilik ZharWeb
+</button>
+
+<button class="suggestion" data-prompt="Apa saja skill Idzhar?">
+  <i class="fa-solid fa-code"></i>
+  <b>Skill</b>
+  HTML, CSS, dan JavaScript
+</button>
+
+<button class="suggestion" data-prompt="Apa saja proyek dan portofolio Idzhar?">
+  <i class="fa-solid fa-briefcase"></i>
+  <b>Portofolio</b>
+  Lihat karya Idzhar
+</button>
+
+<button class="suggestion" data-prompt="Bagaimana cara menghubungi Idzhar untuk kerja sama?">
+  <i class="fa-solid fa-envelope"></i>
+  <b>Hubungi Idzhar</b>
+  Kontak dan kerja sama
+</button>
+      </div>
+    </section>
+
+    <section id="chat" hidden></section>
+  </main>
+
+  <footer>
+    <form class="composer" id="chatForm">
+      <textarea id="prompt" rows="1" placeholder="Tulis pesan..." aria-label="Pesan"></textarea>
+      <button id="send" type="submit" aria-label="Kirim pesan">
+        <i class="fa-solid fa-arrow-up"></i>
+      </button>
+    </form>
+    <p class="disclaimer">ZharAi versi demo · Periksa kembali informasi penting.</p>
+  </footer>
+</div>
+
+<!-- Halaman histori khusus -->
+<section id="historyView" hidden>
+  <header class="history-header">
+    <button class="icon-btn" id="backHistory" aria-label="Kembali ke chat">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="history-heading">
+      <h2>Histori Obrolan</h2>
+      <p>Riwayat percakapan ZharAi</p>
+    </div>
+    <button class="icon-btn" id="refreshHistory" aria-label="Perbarui histori">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </header>
+  <div class="history-body">
+    <div class="history-tools">
+      <button class="action-btn" id="exportTxt"><i class="fa-solid fa-file-lines"></i> TXT</button>
+      <button class="action-btn" id="exportCsv"><i class="fa-solid fa-file-csv"></i> CSV</button>
+      <button class="action-btn primary" id="exportExcel"><i class="fa-solid fa-file-excel"></i> Excel</button>
+      <button class="action-btn danger" id="deleteAllHistory"><i class="fa-solid fa-trash"></i> Hapus Semua</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+</section>
+
+<!-- Pop-up tentang dan konfirmasi -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Tentang ZharAi</h2>
+      <button class="modal-close" id="modalClose" aria-label="Tutup">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-content" id="modalContent"></div>
+    <div class="confirm-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Library Excel untuk membuat file XLSX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const welcome = $("welcome");
+const chat = $("chat");
+const main = $("main");
+const promptInput = $("prompt");
+const sendButton = $("send");
+const form = $("chatForm");
+const toastBox = $("toast");
+
+const HISTORY_KEY = "zharai_conversation_history_v1";
+
+let busy = false;
+let toastTimer;
+let sessionMessages = [];
+let activeConversationId = null;
+let history = loadHistory();
+
+function makeId() {
+  return "zhar_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+}
+
+function loadHistory() {
+  try {
+    const data = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    return Array.isArray(data) ? data.filter(item =>
+      item && item.id && Array.isArray(item.messages)
+    ) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveHistory() {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    return true;
+  } catch (error) {
+    toast("Penyimpanan penuh. Histori belum berhasil disimpan.");
+    return false;
+  }
+}
+
+function toast(message) {
+  toastBox.textContent = message;
+  toastBox.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toastBox.style.display = "none";
+  }, 2400);
+}
+
+function showChat() {
+  welcome.hidden = true;
+  chat.hidden = false;
+}
+
+function addMessage(text, role, time = Date.now()) {
+  showChat();
+
+  const item = document.createElement("article");
+  item.className = "message " + role;
+
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+
+  const avatarIcon = document.createElement("i");
+  avatarIcon.className = role === "user"
+    ? "fa-solid fa-user"
+    : "fa-solid fa-bolt";
+  avatar.appendChild(avatarIcon);
+
+  const content = document.createElement("div");
+  content.className = "content";
+
+  const name = document.createElement("div");
+  name.className = "name";
+  name.textContent = role === "user" ? "Kamu" : "ZharAi";
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+
+  content.append(name, bubble);
+  item.append(avatar, content);
+  chat.appendChild(item);
+
+  main.scrollTop = main.scrollHeight;
+
+  return item;
+}
+
+function renderSession() {
+  chat.replaceChildren();
+
+  if (!sessionMessages.length) {
+    chat.hidden = true;
+    welcome.hidden = false;
+    return;
+  }
+
+  welcome.hidden = true;
+  chat.hidden = false;
+
+  sessionMessages.forEach(message => {
+    addMessage(message.text, message.role, message.time);
+  });
+
+  main.scrollTop = main.scrollHeight;
+}
+
+function getCurrentConversation() {
+  return history.find(item => item.id === activeConversationId);
+}
+
+function saveCurrentConversation() {
+  if (!sessionMessages.length) return;
+
+  let conversation = getCurrentConversation();
+
+  if (!conversation) {
+    conversation = {
+      id: activeConversationId || makeId(),
+      title: "Percakapan Baru",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      messages: []
+    };
+
+    activeConversationId = conversation.id;
+    history.unshift(conversation);
+  }
+
+  conversation.messages = sessionMessages.map(message => ({...message}));
+  conversation.updatedAt = Date.now();
+
+  const firstUser = sessionMessages.find(message => message.role === "user");
+  if (firstUser) {
+    conversation.title = firstUser.text.trim().replace(/\s+/g, " ").slice(0, 55)
+      || "Percakapan Baru";
+  }
+
+  saveHistory();
+}
+
+function startNewChat() {
+  if (busy) {
+    toast("Tunggu jawaban selesai dulu.");
+    return;
+  }
+
+  saveCurrentConversation();
+
+  activeConversationId = null;
+  sessionMessages = [];
+  promptInput.value = "";
+  promptInput.style.height = "auto";
+  renderSession();
+  main.scrollTop = 0;
+  toast("Chat baru siap digunakan.");
+}
+
+
+function getResponse(message) {
+  const text = message.toLowerCase().trim();
+
+  // Database profil ZharWeb
+  const profile = {
+    nama: "Muhammad Idzhar Al-Asyari",
+    panggilan: "Idzhar",
+    brand: "ZharWeb",
+    lokasi: "Jakarta Barat, Indonesia",
+    skill: ["HTML", "CSS", "JavaScript"],
+    github: "https://github.com/zharhosting88",
+    website: "https://zharhosting88.github.io/zharWebV2/zharWebV2",
+    whatsapp: "https://wa.me/6285811570814",
+    nomor: "085811570814",
+    layanan: [
+      "Pembuatan website profil",
+      "Landing page",
+      "Website bisnis",
+      "Website responsif",
+      "Pengembangan fitur interaktif dengan JavaScript"
+    ]
+  };
+
+  // Sapaan
+  if (/^(hai|halo|hello|hi|assalamualaikum|pagi|siang|sore|malam)[!. ]*$/.test(text)) {
+    return `Halo! 👋 Aku ZharAi, asisten profil ${profile.nama} dari ${profile.brand}.
+
+Aku bisa membantu kamu mengenal Idzhar, skill, proyek, layanan, dan informasi kontaknya.
+
+Mau tahu apa tentang Idzhar?`;
+  }
+
+  // Identitas
+  if (
+    text.includes("siapa kamu") ||
+    text.includes("kamu siapa") ||
+    text.includes("siapa dirimu")
+  ) {
+    return `Aku ZharAi, asisten virtual khusus untuk profil ${profile.nama} dari ${profile.brand}.
+
+Tugasku membantu pengunjung mendapatkan informasi tentang Idzhar, kemampuan web development, portofolio, dan layanan yang ditawarkan.`;
+  }
+
+  if (
+    text.includes("siapa idzhar") ||
+    text.includes("siapa muhammad") ||
+    text.includes("tentang idzhar") ||
+    text.includes("profil idzhar") ||
+    text.includes("tentang dia") ||
+    text.includes("tentang pemilik") ||
+    text.includes("siapa pemilik")
+  ) {
+    return `${profile.nama} adalah web developer pemula, di balik ${profile.brand} yang memiliki minat dalam dunia website dan teknologi.
+
+Idzhar mempelajari pengembangan website menggunakan ${profile.skill.join(", ")} dan mengembangkan proyek web sebagai sarana belajar sekaligus membangun portofolio.
+
+Lokasinya di ${profile.lokasi}.`;
+  }
+
+  // Nama dan panggilan
+  if (
+    text.includes("nama lengkap") ||
+    text.includes("nama asli") ||
+    text.includes("nama pemilik") ||
+    text.includes("nama kamu")
+  ) {
+    return `Nama lengkap pemilik profil ini adalah ${profile.nama}. Kamu juga bisa memanggilnya Idzhar/zhar.`;
+  }
+
+  // Brand
+  if (
+    text.includes("zharweb") ||
+    text.includes("brand") ||
+    text.includes("merek") ||
+    text.includes("bisnisnya")
+  ) {
+    return `${profile.brand} adalah brand yang digunakan Idzhar untuk memperkenalkan karya, proyek, dan layanan website buatannya.
+
+Kamu bisa melihat proyek dan informasi lainnya melalui website profil ini atau mengunjungi GitHub miliknya di ${profile.github}.`;
+  }
+
+  // Skill
+  if (
+    text.includes("skill") ||
+    text.includes("keahlian") ||
+    text.includes("kemampuan") ||
+    text.includes("bisa coding") ||
+    text.includes("bisa ngoding") ||
+    text.includes("bahasa pemrograman") ||
+    text.includes("teknologi")
+  ) {
+    return `Skill utama yang dipelajari Idzhar meliputi:
+
+1. HTML — menyusun struktur halaman website.
+2. CSS — mengatur desain, layout, dan responsivitas.
+3. JavaScript — menambahkan interaksi dan fitur dinamis.
+
+Itulah teknologi utama yang ditampilkan pada profil ${profile.brand}.`;
+  }
+
+  if (text.includes("html")) {
+    return `Idzhar mempelajari HTML untuk membangun struktur halaman website, seperti heading, paragraf, gambar, tombol, dan formulir. HTML menjadi salah satu skill utamanya di ${profile.brand}.`;
+  }
+
+  if (text.includes("css")) {
+    return `CSS merupakan salah satu skill Idzhar. Teknologi ini digunakan untuk membuat tampilan website lebih menarik, mengatur warna dan layout, serta memastikan halaman nyaman dibuka di HP maupun desktop.`;
+  }
+
+  if (
+    text.includes("javascript") ||
+    text.includes("java script") ||
+    text.includes(" js")
+  ) {
+    return `JavaScript adalah salah satu teknologi yang dipelajari Idzhar untuk membuat website interaktif, misalnya tombol, popup, validasi formulir, dan fitur dinamis.`;
+  }
+  
+  if (
+    text.includes("pengalaman kerja") ||
+    text.includes("pengalaman profesional") ||
+    text.includes("sudah kerja") ||
+    text.includes("berapa tahun pengalaman")
+  ) {
+    return `Informasi pengalaman kerja profesional Idzhar belum dicantumkan secara lengkap pada profil ini.
+
+Yang bisa aku informasikan adalah skill utama yang ditampilkan, yaitu HTML, CSS, dan JavaScript, serta minatnya dalam pengembangan website.`;
+  }
+
+  // Portofolio dan proyek
+  if (
+    text.includes("portofolio") ||
+    text.includes("portfolio") ||
+    text.includes("hasil karya") ||
+    text.includes("proyek") ||
+    text.includes("project") ||
+    text.includes("website buatan")
+  ) {
+    return `Kamu bisa melihat portofolio dan proyek Idzhar melalui halaman Portofolio di website ini.
+
+Beberapa jenis proyek yang relevan dengan pekerjaannya antara lain website profil, aplikasi web, dan website bisnis.
+
+Website: ${profile.website}
+GitHub: ${profile.github}
+
+Catatan: periksa tautan proyek untuk melihat karya yang benar-benar sudah dipublikasikan.`;
+  }
+
+  // Layanan
+  if (
+    text.includes("jasa") ||
+    text.includes("layanan") ||
+    text.includes("harga website") ||
+    text.includes("bisa bikin website") ||
+    text.includes("buat website") ||
+    text.includes("pembuatan website")
+  ) {
+    return `Melalui ${profile.brand}, Idzhar menampilkan layanan yang berkaitan dengan pembuatan website, seperti:
+
+${profile.layanan.map((item, index) => `${index + 1}. ${item}`).join("\n")}
+
+Untuk menanyakan kebutuhan proyek, silakan hubungi Idzhar melalui WhatsApp:
+${profile.whatsapp}
+
+Harga dan ketersediaan layanan perlu dikonfirmasi langsung.`;
+  }
+
+  // Lokasi
+  if (
+    text.includes("alamat") ||
+    text.includes("lokasi") ||
+    text.includes("tinggal di mana") ||
+    text.includes("tinggal dimana") ||
+    text.includes("tinggal dmn") ||
+    text.includes("asal mana") ||
+    text.includes("kota mana")
+  ) {
+    return `Lokasi yang dicantumkan pada profil Idzhar adalah ${profile.lokasi}. 
+    
+jika ingin lebih jelas silahkan hubungi idzhar (bos saya) : ${profile.nomor}`;
+  }
+
+  // Kontak
+  if (
+    text.includes("kontak") ||
+    text.includes("nomor") ||
+    text.includes("telepon") ||
+    text.includes("no hp") ||
+    text.includes("whatsapp") ||
+    text.includes("wa idzhar") ||
+    text.includes("hubungi")
+  ) {
+    return `Kamu bisa menghubungi Idzhar melalui:
+
+WhatsApp: ${profile.nomor}
+Link WhatsApp: ${profile.whatsapp}
+GitHub: ${profile.github}
+
+Silakan gunakan kontak tersebut untuk pertanyaan tentang website atau kerja sama.`;
+  }
+
+  // GitHub dan website
+  if (text.includes("github")) {
+    return `GitHub Idzhar:
+${profile.github}
+
+Kamu bisa membuka profil tersebut untuk melihat repositori dan proyek yang tersedia secara publik.`;
+  }
+
+  if (
+    text.includes("website pribadi") ||
+    text.includes("link website") ||
+    text.includes("website idzhar") ||
+    text.includes("website zharweb")
+  ) {
+    return `Website profil/proyek Idzhar:
+${profile.website}
+
+Kamu juga bisa membuka GitHub:
+${profile.github}`;
+  }
+
+  // Pendidikan: informasi belum tentu tersedia
+  if (
+    text.includes("sekolah") ||
+    text.includes("pendidikan") ||
+    text.includes("kuliah") ||
+    text.includes("lulusan") ||
+    text.includes("jurusan")
+  ) {
+    return `Informasi pendidikan lengkap Idzhar belum dicantumkan pada basis pengetahuanku saat ini. Kamu bisa melihat bagian Tentang pada profil untuk informasi yang tersedia.`;
+  }
+
+  // Hobi dan minat
+  if (
+    text.includes("hobi") ||
+    text.includes("minat") ||
+    text.includes("suka apa") ||
+    text.includes("ketertarikan")
+  ) {
+    return `Minat yang ditampilkan pada profil Idzhar adalah web development dan teknologi, terutama membangun serta mengembangkan website menggunakan HTML, CSS, dan JavaScript.
+
+Untuk hobi pribadi lainnya, aku belum memiliki informasi yang terverifikasi.`;
+  }
+
+  // Kerja sama
+  if (
+    text.includes("kerja sama") ||
+    text.includes("kolaborasi") ||
+    text.includes("rekrut") ||
+    text.includes("hire") ||
+    text.includes("freelance")
+  ) {
+    return `Tertarik bekerja sama dengan Idzhar atau ${profile.brand}?
+
+Kamu bisa menyampaikan kebutuhan proyek, jenis website, dan fitur yang diinginkan melalui WhatsApp:
+
+${profile.whatsapp}
+
+Detail kesepakatan dan ketersediaan perlu dibicarakan langsung dengan Idzhar.`;
+  }
+
+  // Privasi dan pertanyaan di luar profil
+  if (
+    text.includes("umur") ||
+    text.includes("usia") ||
+    text.includes("tanggal lahir") ||
+    text.includes("lahir kapan") ||
+    text.includes("pacar") ||
+    text.includes("agama") ||
+    text.includes("keluarga")
+  ) {
+    return `Aku hanya menjawab informasi profil yang memang tersedia dan sesuai untuk dibagikan. Detail pribadi tersebut belum tersedia dalam basis pengetahuanku.`;
+  }
+
+  if (
+    text.includes("terima kasih") ||
+    text.includes("makasih") ||
+    text.includes("thanks")
+  ) {
+    return `Sama-sama! Senang bisa membantu kamu mengenal Idzhar dan ${profile.brand}. Ada yang ingin kamu tanyakan tentang skill, portofolio, atau layanan websitenya?`;
+  }
+
+  // Default: tetap fokus pada pemilik profil
+  return `Maaf, aku belum memiliki informasi tentang hal itu di basis pengetahuan profil Idzhar.
+
+Aku khusus membantu menjawab pertanyaan seputar:
+• Identitas dan profil Idzhar
+• Skill HTML, CSS, dan JavaScript
+• ZharWeb dan portofolio
+• Proyek serta layanan website
+• Kontak dan kerja sama
+
+Coba tanyakan salah satu topik tersebut, ya!`;
+}
+
+
+function sendMessage(message) {
+  message = message.trim();
+
+  if (!message || busy) return;
+
+  const userMessage = {
+    role: "user",
+    text: message,
+    time: Date.now()
+  };
+
+  sessionMessages.push(userMessage);
+  addMessage(userMessage.text, userMessage.role, userMessage.time);
+  saveCurrentConversation();
+
+  promptInput.value = "";
+  promptInput.style.height = "auto";
+
+  busy = true;
+  sendButton.disabled = true;
+
+  const typing = addMessage("Sedang menyiapkan jawaban...", "bot");
+  typing.querySelector(".bubble").classList.add("typing");
+
+  setTimeout(() => {
+    typing.remove();
+
+    const reply = getResponse(message);
+    const botMessage = {
+      role: "bot",
+      text: reply,
+      time: Date.now()
+    };
+
+    sessionMessages.push(botMessage);
+    addMessage(botMessage.text, botMessage.role, botMessage.time);
+    saveCurrentConversation();
+
+    busy = false;
+    sendButton.disabled = false;
+    promptInput.focus();
+  }, 350);
+}
+
+/* Histori obrolan */
+function openHistoryPage() {
+  if (busy) {
+    toast("Tunggu jawaban selesai dulu.");
+    return;
+  }
+
+  saveCurrentConversation();
+  renderHistory();
+  $("historyView").hidden = false;
+}
+
+function closeHistoryPage() {
+  $("historyView").hidden = true;
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return "-";
+
+  return date.toLocaleString("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function renderHistory() {
+  const list = $("historyList");
+  list.replaceChildren();
+
+  history.sort((a, b) => b.updatedAt - a.updatedAt);
+
+  if (!history.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-history";
+    empty.innerHTML = '<i class="fa-regular fa-comments"></i><br><strong>Belum ada histori obrolan</strong><br>Mulai percakapan dan histori akan tersimpan otomatis di sini.';
+    list.appendChild(empty);
+    return;
+  }
+
+  history.forEach(conversation => {
+    const card = document.createElement("article");
+    card.className = "history-card";
+
+    const icon = document.createElement("div");
+    icon.className = "history-icon";
+    icon.innerHTML = '<i class="fa-solid fa-comments"></i>';
+
+    const info = document.createElement("div");
+    info.className = "history-info";
+
+    const title = document.createElement("h3");
+    title.textContent = conversation.title || "Percakapan";
+
+    const lastMessage = conversation.messages[conversation.messages.length - 1];
+    const preview = document.createElement("p");
+    preview.textContent = lastMessage
+      ? lastMessage.text.slice(0, 100) + (lastMessage.text.length > 100 ? "..." : "")
+      : "Belum ada pesan";
+
+    const date = document.createElement("p");
+    date.style.marginTop = "5px";
+    date.textContent = formatDate(conversation.updatedAt) +
+      " · " + conversation.messages.length + " pesan";
+
+    info.append(title, preview, date);
+
+    const actions = document.createElement("div");
+    actions.className = "history-actions";
+
+    const openBtn = document.createElement("button");
+    openBtn.className = "action-btn primary";
+    openBtn.innerHTML = '<i class="fa-solid fa-folder-open"></i> Buka';
+    openBtn.addEventListener("click", () => {
+      if (busy) {
+        toast("Tunggu jawaban selesai dulu.");
+        return;
+      }
+
+      // Simpan chat yang sedang aktif sebelum beralih ke histori lain.
+      saveCurrentConversation();
+
+      activeConversationId = conversation.id;
+      sessionMessages = conversation.messages.map(message => ({...message}));
+
+      renderSession();
+      closeHistoryPage();
+      main.scrollTop = main.scrollHeight;
+      toast("Histori percakapan dibuka.");
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "action-btn danger";
+    deleteBtn.setAttribute("aria-label", "Hapus percakapan");
+    deleteBtn.title = "Hapus percakapan";
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    deleteBtn.addEventListener("click", () => {
+      showConfirm(
+        "Hapus percakapan?",
+        "Histori ini akan dihapus secara permanen dari browser.",
+        () => {
+          history = history.filter(item => item.id !== conversation.id);
+
+          if (activeConversationId === conversation.id) {
+            activeConversationId = null;
+            sessionMessages = [];
+            renderSession();
+          }
+
+          saveHistory();
+          renderHistory();
+          toast("Histori berhasil dihapus.");
+        }
+      );
+    });
+
+    actions.append(openBtn, deleteBtn);
+    card.append(icon, info, actions);
+    list.appendChild(card);
+  });
+}
+
+/* Export TXT */
+function exportTXT() {
+  if (!history.some(item => item.messages.length)) {
+    toast("Belum ada histori untuk diekspor.");
+    return;
+  }
+
+  let output = "ZHARAI — HISTORI OBROLAN\n";
+  output += "Diekspor: " + formatDate(Date.now()) + "\n\n";
+
+  history.slice().sort((a, b) => a.createdAt - b.createdAt)
+    .forEach(conversation => {
+      output += "========================================\n";
+      output += (conversation.title || "Percakapan") + "\n";
+      output += "Tanggal: " + formatDate(conversation.createdAt) + "\n\n";
+
+      conversation.messages.forEach(message => {
+        output += "[" + formatDate(message.time) + "] ";
+        output += message.role === "user" ? "Kamu:\n" : "ZharAi:\n";
+        output += message.text + "\n\n";
+      });
+
+      output += "\n";
+    });
+
+  downloadFile(
+    new Blob(["\uFEFF", output], {type: "text/plain;charset=utf-8"}),
+    "ZharAi-Histori.txt"
+  );
+
+  toast("Export TXT berhasil.");
+}
+
+/* Export CSV */
+function exportCSV() {
+  if (!history.some(item => item.messages.length)) {
+    toast("Belum ada histori untuk diekspor.");
+    return;
+  }
+
+  const rows = [["Judul Percakapan", "Pengirim", "Pesan", "Waktu"]];
+
+  history.slice().sort((a, b) => a.createdAt - b.createdAt)
+    .forEach(conversation => {
+      conversation.messages.forEach(message => {
+        rows.push([
+          conversation.title || "Percakapan",
+          message.role === "user" ? "Kamu" : "ZharAi",
+          message.text,
+          formatDate(message.time)
+        ]);
+      });
+    });
+
+  const csv = rows.map(row => row.map(value =>
+    '"' + String(value).replace(/"/g, '""') + '"'
+  ).join(",")).join("\r\n");
+
+  downloadFile(
+    new Blob(["\uFEFF", csv], {type: "text/csv;charset=utf-8"}),
+    "ZharAi-Histori.csv"
+  );
+
+  toast("Export CSV berhasil.");
+}
+
+/* Export Excel XLSX */
+function exportExcel() {
+  if (!history.some(item => item.messages.length)) {
+    toast("Belum ada histori untuk diekspor.");
+    return;
+  }
+
+  if (typeof XLSX === "undefined") {
+    toast("Library Excel tidak tersedia. Periksa koneksi internet.");
+    return;
+  }
+
+  const rows = [["Judul Percakapan", "Pengirim", "Pesan", "Waktu"]];
+
+  history.slice().sort((a, b) => a.createdAt - b.createdAt)
+    .forEach(conversation => {
+      conversation.messages.forEach(message => {
+        rows.push([
+          conversation.title || "Percakapan",
+          message.role === "user" ? "Kamu" : "ZharAi",
+          message.text,
+          formatDate(message.time)
+        ]);
+      });
+    });
+
+  const worksheet = XLSX.utils.aoa_to_sheet(rows);
+  worksheet["!cols"] = [
+    {wch: 30},
+    {wch: 15},
+    {wch: 70},
+    {wch: 25}
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Histori ZharAi");
+  XLSX.writeFile(workbook, "ZharAi-Histori.xlsx");
+
+  toast("File Excel berhasil dibuat.");
+}
+
+function downloadFile(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+/* Pop-up */
+function closeModal() {
+  $("modalBackdrop").classList.remove("show");
+}
+
+function showModal(title, content, actions = []) {
+  $("modalTitle").textContent = title;
+  $("modalContent").replaceChildren();
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = content;
+  $("modalContent").appendChild(paragraph);
+
+  const actionArea = $("modalActions");
+  actionArea.replaceChildren();
+
+  actions.forEach(action => {
+    const button = document.createElement("button");
+    button.className = "action-btn " + (action.className || "");
+    button.textContent = action.label;
+
+    button.addEventListener("click", () => {
+      closeModal();
+      if (action.callback) action.callback();
+    });
+
+    actionArea.appendChild(button);
+  });
+
+  $("modalBackdrop").classList.add("show");
+}
+
+function showAbout() {
+  $("modalTitle").textContent = "Tentang ZharAi";
+
+  $("modalContent").innerHTML = `
+    <div class="modal-logo"><i class="fa-solid fa-bolt"></i></div>
+    <h3>ZharAi <span style="color:#8baaff">by ZharWeb</span></h3>
+    <p>ZharAi adalah asisten digital sederhana berbasis web yang dikembangkan sebagai bagian dari proyek ZharWeb.</p>
+    <p><strong>Fitur aplikasi</strong><br>
+    Percakapan, penyimpanan histori otomatis, membuka kembali obrolan, serta ekspor histori ke TXT, CSV, dan Excel.</p>
+    <p><strong>Teknologi</strong><br>HTML, CSS, dan JavaScript.</p>
+    <p><strong>Catatan</strong><br>Versi ini masih menggunakan respons offline berbasis kata kunci, bukan model AI generatif online.</p>
+    <div class="modal-footer">Dikembangkan oleh Muhammad Idzhar Al-Asyari · ZharWeb</div>
+  `;
+
+  $("modalActions").replaceChildren();
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "action-btn primary";
+  closeBtn.textContent = "Mengerti";
+  closeBtn.onclick = closeModal;
+  $("modalActions").appendChild(closeBtn);
+
+  $("modalBackdrop").classList.add("show");
+}
+
+/* Event chat yang sudah ada */
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  sendMessage(promptInput.value);
+});
+
+promptInput.addEventListener("input", () => {
+  promptInput.style.height = "auto";
+  promptInput.style.height =
+    Math.min(promptInput.scrollHeight, 140) + "px";
+});
+
+promptInput.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    form.requestSubmit();
+  }
+});
+
+document.querySelectorAll(".suggestion").forEach(button => {
+  button.addEventListener("click", () => {
+    sendMessage(button.dataset.prompt);
+  });
+});
+
+$("newChat").addEventListener("click", startNewChat);
+
+$("clearChat").addEventListener("click", () => {
+  if (busy) {
+    toast("Tunggu jawaban selesai dulu.");
+    return;
+  }
+
+  showConfirm(
+    "Bersihkan percakapan?",
+    "Pesan di halaman chat akan dibersihkan. Histori yang sudah tersimpan tetap tersedia.",
+    () => {
+      activeConversationId = null;
+      sessionMessages = [];
+      promptInput.value = "";
+      promptInput.style.height = "auto";
+      renderSession();
+      main.scrollTop = 0;
+      toast("Percakapan dibersihkan.");
+    }
+  );
+});
+
+/* Event halaman histori */
+$("openHistory").addEventListener("click", openHistoryPage);
+$("backHistory").addEventListener("click", closeHistoryPage);
+$("refreshHistory").addEventListener("click", () => {
+  saveCurrentConversation();
+  renderHistory();
+  toast("Histori diperbarui.");
+});
+
+$("exportTxt").addEventListener("click", exportTXT);
+$("exportCsv").addEventListener("click", exportCSV);
+$("exportExcel").addEventListener("click", exportExcel);
+
+$("deleteAllHistory").addEventListener("click", () => {
+  if (!history.length) {
+    toast("Histori masih kosong.");
+    return;
+  }
+
+  showConfirm(
+    "Hapus semua histori?",
+    "Semua histori percakapan yang tersimpan akan dihapus. Tindakan ini tidak dapat dibatalkan.",
+    () => {
+      history = [];
+      activeConversationId = null;
+      sessionMessages = [];
+      saveHistory();
+      renderHistory();
+      renderSession();
+      toast("Semua histori berhasil dihapus.");
+    }
+  );
+});
+
+function showConfirm(title, message, callback) {
+  showModal(title, message, [
+    {label: "Batal", className: ""},
+    {label: "Ya, lanjutkan", className: "danger", callback}
+  ]);
+}
+
+$("aboutBtn").addEventListener("click", showAbout);
+$("modalClose").addEventListener("click", closeModal);
+
+$("modalBackdrop").addEventListener("click", event => {
+  if (event.target === $("modalBackdrop")) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+/* Pemulihan sesi terakhir */
+function restoreLastConversation() {
+  if (!history.length) return;
+
+  history.sort((a, b) => b.updatedAt - a.updatedAt);
+  const last = history[0];
+
+  activeConversationId = last.id;
+  sessionMessages = last.messages.map(message => ({...message}));
+  renderSession();
+}
+
+$("backProfile").addEventListener("click", () => {
+  window.location.href = "z.profile.html";
+});
+restoreLastConversation();
+</script>
+</body>
+</html>
